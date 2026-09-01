@@ -1,0 +1,11 @@
+llvm-vs-code-extensions.vscode-clangd
+ms-python.vscode-python-envs
+ms-python.debugpy
+ms-python.python
+shopify.ruby-lsp
+meta.pyrefly
+ms-vscode.powershell
+eamodio.gitlens
+golang.go
+ms-azuretools.vscode-docker
+ms-azuretools.vscode-containers

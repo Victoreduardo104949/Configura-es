@@ -1,0 +1,77 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "9router": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:20128/v1",
+        "apiKey": "${NINEROUTER_API_KEY}"
+      },
+      "models": {
+        "meuc": {
+          "name": "meuc",
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "ComboGPT_basico": {
+          "name": "ComboGPT_basico",
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "ComboFullGPT": {
+          "name": "ComboFullGPT",
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "combo_nvidia": {
+          "name": "combo_nvidia",
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "vercel": {
+      "type": "remote",
+      "url": "https://mcp.vercel.com",
+      "enabled": true
+    }
+  },
+  "model": "9router/meuc",
+  "agent": {
+    "explorer": {
+      "description": "Fast explorer subagent for codebase exploration",
+      "mode": "subagent",
+      "model": "9router/meuc"
+    }
+  }
+}

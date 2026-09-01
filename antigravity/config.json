@@ -1,0 +1,11 @@
+{
+  "plugins": {
+    "google-antigravity-sdk": {
+      "enabled": true
+    }
+  },
+  "userSettings": {
+    "remoteControlHostname": "desktop-mkkj73a-fading-mars",
+    "themeMode": "THEME_MODE_DARK"
+  }
+}

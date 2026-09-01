@@ -1,55 +1,70 @@
-# claude-config
+# dev-config
 
-Backup versionado das minhas configurações do Claude Code (nível de usuário, `~/.claude`).
+Configurações de ambiente de desenvolvimento versionadas — assistentes de código
+e IDEs. Backup para restaurar em qualquer máquina.
 
-## Conteúdo
+Ferramentas cobertas: **Claude Code**, **Cursor**, **Antigravity**, **opencode**.
 
-| Caminho | Origem | O que é |
-|---|---|---|
-| `settings.json` | `~/.claude/settings.json` | Tema, modelo padrão, effort level, canal de auto-update |
-| `skills/` | `~/.claude/skills/` | 46 skills instaladas (próprias + de marketplaces) |
-| `mcp/mcp.example.json` | `~/.claude.json` → `mcpServers` | Servidores MCP, **com segredos substituídos por placeholders** |
-| `plugins/known_marketplaces.json` | `~/.claude/plugins/` | Marketplaces de plugins registrados |
-| `.env.example` | — | Modelo das variáveis de ambiente com os segredos reais |
+## Estrutura
+
+```
+claude/       Claude Code  (~/.claude)
+  settings.json            tema, modelo, effort level, canal de update
+  skills/                  46 skills instaladas (conteúdo completo)
+  mcp.example.json         servidores MCP (segredos como placeholders)
+  known_marketplaces.json  marketplaces de plugins
+
+cursor/       Cursor  (~/.cursor + %APPDATA%/Cursor/User)
+  settings.json            settings do usuário
+  mcp.json                 servidores MCP (sem segredos)
+  skills/                  24 skills do Cursor
+  extensions.txt           IDs das extensões instaladas
+
+antigravity/  Antigravity  (~/.gemini/config + %APPDATA%/Antigravity IDE/User)
+  config.json              plugins + userSettings
+  mcp_config.example.json  servidores MCP (segredos como placeholders)
+  skills/                  42 skills
+  ide-settings.json        settings do editor
+  extensions.txt           IDs das extensões instaladas
+
+opencode/     opencode  (~/.config/opencode)
+  opencode.example.json    provider, model, agents, MCP (segredos como placeholders)
+  opencode.example.jsonc   MCP remoto (segredos como placeholders)
+  AGENTS.md                regras globais
+
+scripts/
+  restore.sh / restore.ps1  reinstala tudo numa máquina nova
+```
 
 ## Segredos
 
-Os tokens **não** estão neste repo. `mcp/mcp.example.json` usa placeholders:
+Nenhum token está neste repo. Os arquivos `*.example.json` usam placeholders
+`${VAR}` resolvidos a partir de um `.env` local (git-ignorado):
 
-- `CONTEXT7_API_KEY`
-- `GITHUB_PERSONAL_ACCESS_TOKEN`
-- `SUPABASE_PROJECT_REF`
+| Variável | Onde é usada |
+|---|---|
+| `CONTEXT7_API_KEY` | Claude, Antigravity, opencode |
+| `GITHUB_PERSONAL_ACCESS_TOKEN` | Claude, Antigravity, opencode |
+| `SUPABASE_PROJECT_REF` | Claude, Antigravity, opencode |
+| `NINEROUTER_API_KEY` | opencode (provider local) |
 
-Copie `.env.example` para `.env` e preencha. `.env` está no `.gitignore`.
+Copie `.env.example` para `.env` e preencha.
 
 ## Restaurar numa máquina nova
 
 ```bash
-# 1. Skills
-cp -r skills/* ~/.claude/skills/
-
-# 2. Settings
-cp settings.json ~/.claude/settings.json
-
-# 3. Marketplaces de plugins
-cp plugins/known_marketplaces.json ~/.claude/plugins/known_marketplaces.json
-
-# 4. MCP servers: preencha .env e gere o mcp.json real
-#    (ou configure via `claude mcp add ...`)
+cp .env.example .env      # e preencha os valores
+bash scripts/restore.sh   # Linux/macOS/Git Bash
+# ou
+pwsh scripts/restore.ps1  # Windows PowerShell
 ```
 
-Existe `restore.sh` (bash) e `restore.ps1` (PowerShell) que fazem os passos 1-3 e
-geram `mcp/mcp.local.json` a partir do `.env`.
+O script copia settings e skills para os diretórios de cada ferramenta e gera os
+`mcp.local.json` com os segredos do `.env` (que você mescla na config real, já
+que os tokens vivem no `~/.claude.json` / `mcp_config.json` de cada app).
 
-## Skills incluídas
+Extensões de IDE reinstale a partir de `*/extensions.txt`, ex.:
 
-agy-customizations, antigravity-guide, brainstorming, caveman, dispatching-parallel-agents,
-eas-app-stores, eas-hosting, eas-observe, eas-simulator, eas-update-insights, eas-workflows,
-executing-plans, expo-app-clip, expo-brownfield, expo-data-fetching, expo-design-system,
-expo-dev-client, expo-dom, expo-examples, expo-migrate-module, expo-module, expo-native-ui,
-expo-project-structure, expo-router, expo-skill-feedback, expo-tailwind-setup, expo-ui,
-expo-upgrade, expo-web-to-native, finishing-a-development-branch, frontend-design,
-google-antigravity-sdk, karpathy-guidelines, permissioned-github, receiving-code-review,
-requesting-code-review, subagent-driven-development, supabase, supabase-postgres-best-practices,
-systematic-debugging, test-driven-development, using-git-worktrees, using-superpowers,
-verification-before-completion, writing-plans, writing-skills
+```bash
+cursor --install-extension <id>
+```
