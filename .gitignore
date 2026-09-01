@@ -1,0 +1,9 @@
+# Segredos - nunca commitar
+.env
+mcp/mcp.local.json
+*.local.json
+.credentials.json
+
+# Ruído
+.DS_Store
+node_modules/
