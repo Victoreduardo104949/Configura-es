@@ -10,20 +10,20 @@ Ferramentas cobertas: **Claude Code**, **Cursor**, **Antigravity**, **opencode**
 ```
 claude/       Claude Code  (~/.claude)
   settings.json            tema, modelo, effort level, canal de update
-  skills/                  46 skills instaladas (conteúdo completo)
+  skills/                  53 skills instaladas (conteúdo completo)
   mcp.example.json         servidores MCP (segredos como placeholders)
   known_marketplaces.json  marketplaces de plugins
 
 cursor/       Cursor  (~/.cursor + %APPDATA%/Cursor/User)
   settings.json            settings do usuário
   mcp.json                 servidores MCP (sem segredos)
-  skills/                  24 skills do Cursor
+  skills/                  31 skills do Cursor
   extensions.txt           IDs das extensões instaladas
 
 antigravity/  Antigravity  (~/.gemini/config + %APPDATA%/Antigravity IDE/User)
   config.json              plugins + userSettings
   mcp_config.example.json  servidores MCP (segredos como placeholders)
-  skills/                  42 skills
+  skills/                  49 skills
   ide-settings.json        settings do editor
   extensions.txt           IDs das extensões instaladas
 
@@ -49,6 +49,15 @@ Nenhum token está neste repo. Os arquivos `*.example.json` usam placeholders
 | `NINEROUTER_API_KEY` | opencode (provider local) |
 
 Copie `.env.example` para `.env` e preencha.
+
+## Skills de terceiros
+
+O pacote [`ui-ux-pro-max-skill`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+(v2.13.0, MIT) está vendorizado em `claude/`, `cursor/` e `antigravity/` — 7 skills:
+`ui-ux-pro-max`, `ui-styling`, `design`, `design-system`, `brand`, `banner-design`, `slides`.
+
+Para atualizar: `git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill`
+e recopie `.claude/skills/*` sobre as três pastas de skills.
 
 ## Restaurar numa máquina nova
 
